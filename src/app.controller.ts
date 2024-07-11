@@ -1,7 +1,6 @@
 import {
 	Controller,
 	Get,
-	Param,
 	Query,
 	UsePipes,
 	ValidationPipe
@@ -15,7 +14,9 @@ export class AppController {
 
 	@UsePipes(new ValidationPipe())
 	@Get('users')
-	getUsers(@Query() dto: UserDto) {
-		return this.appService.getUsers(dto)
+	async getUsers(@Query() dto: UserDto) {
+		return await new Promise(resolve =>
+			setTimeout(() => resolve(this.appService.getUsers(dto)), 5000)
+		)
 	}
 }
